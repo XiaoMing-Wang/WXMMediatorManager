@@ -47,7 +47,7 @@
 /** 释放service */
 - (void)releaseServiceSelf {
     dispatch_queue_t queue = dispatch_get_main_queue();
-    int64_t delta = (int64_t)(.12f * NSEC_PER_SEC);
+    int64_t delta = (int64_t)(.1f * NSEC_PER_SEC);
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, delta), queue, ^{
         if (self.freeServiceCallBack && self) self.freeServiceCallBack(self);
     });

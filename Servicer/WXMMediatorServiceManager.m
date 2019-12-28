@@ -9,6 +9,7 @@
 #import "WXMMediatorBaseService.h"
 #import "WXMMediatorConfiguration.h"
 #import "WXMMediatorServiceManager.h"
+
 @implementation WXMMediatorError
 + (instancetype)error:(NSInteger)code message:(NSString *)message object:(id)object {
     WXMMediatorError *error = [[WXMMediatorError alloc] init];
@@ -67,6 +68,7 @@
         if (![serviceArray isKindOfClass:NSArray.class]) return NO;
         for (WXMMediatorBaseService *cacheService in serviceArray.reverseObjectEnumerator) {
             if (cacheService == service) return YES;
+            if (cacheService == service) break;
         }
     }
     return NO;
@@ -111,7 +113,7 @@
 - (void)managerServicerDealloc:(id)depend {
     WXMMediatorCrashBegin
     
-    __block SEL serDeallocSEL = NSSelectorFromString(@"serviceDealloc");
+    SEL serDeallocSEL = NSSelectorFromString(@"serviceDealloc");
     if (!depend) return;
     if ([depend respondsToSelector:serDeallocSEL]) return;
     

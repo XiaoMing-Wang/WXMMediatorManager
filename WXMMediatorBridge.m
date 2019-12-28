@@ -30,10 +30,10 @@ static NSPointerArray *_allInstanceTarget;
 
 /** 遍历数组发送信号 */
 + (void)sendSignalWithContext:(WXMMediatorSendContext *)context {
+    [self cleanTargetArray];
     static dispatch_once_t onceToken;
     static dispatch_semaphore_t lock;
     dispatch_once(&onceToken, ^{ lock = dispatch_semaphore_create(1); });
-    
     dispatch_queue_t queque = dispatch_queue_create("WXM_Goyakod", DISPATCH_QUEUE_CONCURRENT);
     dispatch_semaphore_wait(lock, DISPATCH_TIME_FOREVER);
     dispatch_async(queque, ^{
@@ -49,8 +49,7 @@ static NSPointerArray *_allInstanceTarget;
     NSDictionary *listens = nil;
     listens = objc_getAssociatedObject(target, WXMMEDIATOR_SIGNAL_KEY);
     if (!listens || listens.allKeys.count == 0) return;
-
-    WXMMediatorListen *listenObjec = [listens objectForKey:context.signal];
+    WXMMediatorListen *listenObjec = [listens valueForKey:context.signal];
     if (listenObjec && listenObjec.callback) {
         dispatch_async(dispatch_get_main_queue(), ^{
             WXMMediatorSignal *signal = [WXMMediatorBridge achieve:context];
@@ -85,6 +84,7 @@ static NSPointerArray *_allInstanceTarget;
     for (int i = 0; i < _allInstanceTarget.count; i++) {
         id obj = [_allInstanceTarget pointerAtIndex:i];
         if (obj == target) haveTarget = YES;
+        if (obj == target) break;
     }
     
     if(!haveTarget) [_allInstanceTarget addPointer:(__bridge void *)(target)];

@@ -5,7 +5,6 @@
 //  Created by wq on 2019/12/24.
 //  Copyright © 2019 wxm. All rights reserved.
 //
-#define WXMMEDIATOR_PERFORM(target) [self performTarget:target action:NSStringFromSelector(_cmd)];
 #import <UIKit/UIKit.h>
 #import <Foundation/Foundation.h>
 
