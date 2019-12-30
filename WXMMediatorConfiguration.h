@@ -20,6 +20,12 @@
 /** service释放block */
 #define WXMMEDIATOR_REMOVE_CALLBACK @"__WXMMEDIATOR_REMOVE_CALLBACK__"
 
+/** 宏 */
+#define WXMDEBUG DEBUG
+#define WXMMediatorCrashBegin  @try {
+#define WXMMediatorCrashEnd    } @catch (NSException *exception) {} @finally {}
+#define weakifyself autoreleasepool {} __weak typeof(self) self_weak = self;
+#define strongifyself autoreleasepool {} __strong __typeof(self_weak) self = self_weak;
 
 typedef NSString *WXM_MEDIATOR_SIGNAL NS_STRING_ENUM;
 typedef void (^WXMSignalCallBack) (id object);

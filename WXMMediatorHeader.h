@@ -29,16 +29,9 @@ class NSObject; static WXM_MEDIATOR_SIGNAL const signal = (@#signal);
 #define WMService(class) \
 [[WXMMediatorServiceManager sharedInstance] serviceForClass:class dependObject:self]
 
-/** 消息转发 */
-#define WXMMEDIATOR_PERFORM(target) [self performTarget:target action:NSStringFromSelector(_cmd)];
-
 /** 错误对象 */
-#define WMError(code, message, object) [WXMMediatorError error:code message:message object:object];
+#define WMError(code, message, object) \
+[WXMMediatorError error:code message:message object:object];
 
-/** 宏 */
-#define WXMDEBUG DEBUG
-#define WXMMediatorCrashBegin  @try {
-#define WXMMediatorCrashEnd    } @catch (NSException *exception) {} @finally {}
-#define weakifyself autoreleasepool {} __weak typeof(self) self_weak = self;
-#define strongifyself autoreleasepool {} __strong __typeof(self_weak) self = self_weak;
+
 #endif /* WXMMediatorHeader_h */

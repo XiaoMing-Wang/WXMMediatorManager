@@ -5,6 +5,16 @@
 //  Created by wq on 2019/12/24.
 //  Copyright © 2019 wxm. All rights reserved.
 //
+/** 消息转发 */
+#define WXMMEDIATOR_PERFORM(target)                                        \
+[self performTarget:target action:NSStringFromSelector(_cmd)];
+
+#define WXMMEDIATOR_PERFORM_PARAMS(target, parameter)                      \
+[self performTarget:target                                                 \
+             action:NSStringFromSelector(_cmd)                             \
+             params:parameter                                              \
+  shouldCacheTarget:NO];
+
 #import <UIKit/UIKit.h>
 #import <Foundation/Foundation.h>
 
@@ -15,10 +25,12 @@ NS_ASSUME_NONNULL_BEGIN
 + (instancetype)sharedInstance;
 
 /**  远程App调用入口 */
-- (id)performActionWithUrl:(NSURL *)url completion:(void (^)(NSDictionary *info))completion;
+- (id)performActionWithUrl:(NSURL *)url
+                completion:(void (^)(NSDictionary *info))completion;
 
 /**  本地组件调用入口 */
-- (id)performTarget:(NSString *)targetName action:(NSString *)actionName;
+- (id)performTarget:(NSString *)targetName
+             action:(NSString *)actionName;
 
 /**  本地组件调用入口 */
 - (id)performTarget:(NSString *)targetName
